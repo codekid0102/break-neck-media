@@ -1,90 +1,51 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function ClientAccess() {
   const [code, setCode] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const router = useRouter();
+  const [galleries, setGalleries] = useState<any[]>([]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    const { data, error } = await supabase
+  const handleSubmit = async () => {
+    const { data: client } = await supabase
       .from("clients")
       .select("*")
-      .eq("access_code", code)
+      .eq("code", code)
       .single();
 
-    setLoading(false);
-
-    if (error || !data) {
-      setError("Invalid access code");
+    if (!client) {
+      alert("Invalid code");
       return;
     }
 
-    router.push(`/gallery/${data.id}`);
+    const { data } = await supabase
+      .from("client_galleries")
+      .select("gallery_id, galleries(*)")
+      .eq("client_code", code);
+
+    setGalleries(data || []);
   };
 
   return (
-    <main style={styles.container}>
+    <div style={{ padding: 40 }}>
       <h1>Client Access</h1>
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="text"
-          placeholder="Enter access code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          style={styles.input}
-        />
+      <input
+        placeholder="Enter your access code"
+        value={code}
+        onChange={(e) => setCode(e.target.value)}
+      />
 
-        <button type="submit" style={styles.button}>
-          {loading ? "Checking..." : "Enter"}
-        </button>
+      <button onClick={handleSubmit}>Enter</button>
 
-        {error && <p style={styles.error}>{error}</p>}
-      </form>
-    </main>
+      <div>
+        {galleries.map((g: any) => (
+          <div key={g.gallery_id}>
+            <h3>{g.galleries.title}</h3>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "#000",
-    color: "#fff",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-    marginTop: "20px",
-  },
-  input: {
-    padding: "12px",
-    width: "250px",
-    borderRadius: "6px",
-    border: "1px solid #333",
-  },
-  button: {
-    padding: "12px",
-    background: "#9333ea",
-    color: "#fff",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer",
-  },
-  error: {
-    color: "red",
-  },
-};
