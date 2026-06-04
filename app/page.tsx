@@ -38,7 +38,7 @@ export default function Home() {
 </section>
 
 
-      {/* SERVICES */}
+      {/* FEATURED WORK */}
      <section id="portfolio" style={styles.section}>
   <h2 style={styles.heading}>Featured Work</h2>
 
@@ -86,16 +86,7 @@ export default function Home() {
 </section>
 
       {/* PORTFOLIO */}
-      <section id="portfolio" style={styles.section}>
-        <h2 style={styles.heading}>Featured Work</h2>
-
-        <div style={styles.grid}>
-          <div style={styles.portfolioCard}>Weddings</div>
-          <div style={styles.portfolioCard}>Events</div>
-          <div style={styles.portfolioCard}>Commercial</div>
-          <div style={styles.portfolioCard}>Drone Projects</div>
-        </div>
-      </section>
+     
 
       {/* ABOUT */}
       <section style={styles.section}>
