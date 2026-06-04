@@ -1,69 +1,90 @@
-export default function ClientPortal() {
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
+
+export default function ClientAccess() {
+  const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    const { data, error } = await supabase
+      .from("clients")
+      .select("*")
+      .eq("access_code", code)
+      .single();
+
+    setLoading(false);
+
+    if (error || !data) {
+      setError("Invalid access code");
+      return;
+    }
+
+    router.push(`/gallery/${data.id}`);
+  };
+
   return (
-    <main style={styles.wrapper}>
-      <h1 style={styles.title}>Client Portal</h1>
+    <main style={styles.container}>
+      <h1>Client Access</h1>
 
-      <p style={styles.subtitle}>
-        Access your private galleries and project files.
-      </p>
-
-      <div style={styles.card}>
-        <h2>🔐 Enter Access Code</h2>
-
+      <form onSubmit={handleSubmit} style={styles.form}>
         <input
-          placeholder="Enter client code..."
+          type="text"
+          placeholder="Enter access code"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
           style={styles.input}
         />
 
-        <button style={styles.button}>Access Gallery</button>
-      </div>
+        <button type="submit" style={styles.button}>
+          {loading ? "Checking..." : "Enter"}
+        </button>
+
+        {error && <p style={styles.error}>{error}</p>}
+      </form>
     </main>
   );
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  wrapper: {
-    padding: "80px 10%",
-    background: "#000",
-    color: "#fff",
+  container: {
     minHeight: "100vh",
-  },
-
-  title: {
-    fontSize: "3rem",
-    marginBottom: "10px",
-  },
-
-  subtitle: {
-    color: "#aaa",
-    marginBottom: "40px",
-  },
-
-  card: {
-    maxWidth: "500px",
-    background: "#111",
-    border: "1px solid #222",
-    padding: "30px",
-    borderRadius: "12px",
-  },
-
-  input: {
-    width: "100%",
-    padding: "12px",
-    marginTop: "20px",
-    marginBottom: "20px",
-    borderRadius: "8px",
-    border: "1px solid #333",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     background: "#000",
     color: "#fff",
   },
-
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+    marginTop: "20px",
+  },
+  input: {
+    padding: "12px",
+    width: "250px",
+    borderRadius: "6px",
+    border: "1px solid #333",
+  },
   button: {
-    padding: "12px 20px",
+    padding: "12px",
     background: "#9333ea",
     color: "#fff",
     border: "none",
-    borderRadius: "8px",
+    borderRadius: "6px",
     cursor: "pointer",
+  },
+  error: {
+    color: "red",
   },
 };
