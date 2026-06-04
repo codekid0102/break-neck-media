@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -7,30 +8,43 @@ export default function Home() {
 
       {/* HERO */}
       <section style={styles.hero}>
-        <p style={styles.kicker}>
-          CAPTURING MOMENTS. DELIVERING STORIES.
-        </p>
+  <Image
+    src="/images/hero.jpg"
+    alt="Break Neck Media"
+    fill
+    priority
+    style={{
+      objectFit: "cover",
+      opacity: 0.35,
+      zIndex: -1,
+    }}
+  />
 
-        <h1 style={styles.title}>
-          BREAK NECK
-          <br />
-          MEDIA
-        </h1>
+  <h1 style={styles.title}>Break Neck Media</h1>
 
-        <p style={styles.subtitle}>
-          Photography • Videography • Drone Content • Event Coverage
-        </p>
+  <p style={styles.subtitle}>
+    Capturing moments. Creating stories. Building visual impact that moves fast and hits hard.
+  </p>
 
-        <div style={styles.buttons}>
-          <a href="#portfolio" style={styles.primaryBtn}>
-            View Portfolio
-          </a>
+  <div style={styles.buttons}>
+    <a href="/client-access" style={styles.primaryBtn}>
+      Client Portal
+    </a>
 
-          <a href="#services" style={styles.secondaryBtn}>
-            Our Services
-          </a>
-        </div>
-      </section>
+    <a href="/admin" style={styles.secondaryBtn}>
+      Admin Dashboard
+    </a>
+  </div>
+</section>
+<section>
+  <h2>Recent Work</h2>
+
+  <div>
+    <img src="/images/wedding.jpg" />
+    <img src="/images/drone.jpg" />
+    <img src="/images/event.jpg" />
+  </div>
+</section>
 
       {/* SERVICES */}
       <section id="services" style={styles.section}>
@@ -101,13 +115,15 @@ export default function Home() {
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  hero: {
-    minHeight: "90vh",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: "0 10%",
-  },
+hero: {
+  position: "relative",
+  minHeight: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  overflow: "hidden",
+},
 
   kicker: {
     color: "#9333ea",
