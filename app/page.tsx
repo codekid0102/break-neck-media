@@ -36,42 +36,54 @@ export default function Home() {
     </a>
   </div>
 </section>
-<section>
-  <h2>Recent Work</h2>
 
-  <div>
-    <img src="/images/wedding.jpg" />
-    <img src="/images/drone.jpg" />
-    <img src="/images/event.jpg" />
-  </div>
-</section>
 
       {/* SERVICES */}
-      <section id="services" style={styles.section}>
-        <h2 style={styles.heading}>Our Services</h2>
+     <section id="portfolio" style={styles.section}>
+  <h2 style={styles.heading}>Featured Work</h2>
 
-        <div style={styles.grid}>
-          <div style={styles.card}>
-            <h3>Photography</h3>
-            <p>Professional photography for events, brands and clients.</p>
-          </div>
+  <div style={styles.grid}>
+ <div
+  style={{
+    ...styles.portfolioCard,
+    backgroundImage:
+  "linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.75)), url('/images/wedding.jpg')",
+  }}
+>
+  Weddings
+</div>
 
-          <div style={styles.card}>
-            <h3>Videography</h3>
-            <p>Cinematic storytelling through high-quality video production.</p>
-          </div>
+    <div
+      style={{
+        ...styles.portfolioCard,
+       backgroundImage:
+  "linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.75)), url('/images/event.jpg')",  
+      }}
+    >
+      Events
+    </div>
 
-          <div style={styles.card}>
-            <h3>Drone Footage</h3>
-            <p>Aerial perspectives that make every project stand out.</p>
-          </div>
+    <div
+      style={{
+        ...styles.portfolioCard,
+        backgroundImage:
+  "linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.75)), url('/images/hero.jpg')",
+      }}
+    >
+      Commercial
+    </div>
 
-          <div style={styles.card}>
-            <h3>Event Coverage</h3>
-            <p>Capturing every important moment from start to finish.</p>
-          </div>
-        </div>
-      </section>
+    <div
+      style={{
+        ...styles.portfolioCard,
+        backgroundImage:
+  "linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.75)), url('/images/drone.jpg')",
+      }}
+    >
+      Drone Projects
+    </div>
+  </div>
+</section>
 
       {/* PORTFOLIO */}
       <section id="portfolio" style={styles.section}>
@@ -190,16 +202,21 @@ hero: {
     background: "#111",
   },
 
-  portfolioCard: {
-    height: "220px",
-    borderRadius: "12px",
-    background: "#111",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontSize: "1.4rem",
-    fontWeight: 700,
-  },
+ portfolioCard: {
+  height: "320px",
+  borderRadius: "16px",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  display: "flex",
+  alignItems: "flex-end",
+  justifyContent: "flex-start",
+  padding: "24px",
+  fontSize: "1.6rem",
+  fontWeight: 700,
+  color: "#fff",
+  position: "relative",
+  overflow: "hidden",
+},
 
   about: {
     maxWidth: "800px",
